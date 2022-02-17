@@ -1,0 +1,16 @@
+.usbrelaycontrol-button-row .usbrelaycontrol-button-label {
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.usbrelaycontrol-button-row .usbrelaycontrol-button-label i {
+    width: 20px;
+}
+
+.usbrelaycontrol-button-row .usbrelaycontrol-button-controls .btn {
+    width: 50%;
+}
+
+.usbrelaycontrol-settings-row {
+    margin-bottom: 5px
+}
