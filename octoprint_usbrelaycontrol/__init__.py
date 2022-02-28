@@ -4,6 +4,7 @@ from octoprint.access.permissions import Permissions
 
 import octoprint.plugin
 import flask
+from flask_babel import gettext
 
 from .relay import Relay
 
