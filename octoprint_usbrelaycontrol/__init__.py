@@ -1,6 +1,6 @@
 # coding=utf-8
 from __future__ import absolute_import, print_function
-from octoprint.server import user_permission
+from octoprint.access.permissions import Permissions
 
 import octoprint.plugin
 import flask
@@ -55,11 +55,13 @@ class USBRelayControlPlugin(
             try:
                 vendor = int(configuration["vendor"], 16)
             except ValueError:
-                return flask.make_response("Invalid vendor: '%s'" % vendor, 403)
+                self._logger.error("Invalid vendor ID")
+                continue
             try:
                 product = int(configuration["product"], 16)
             except ValueError:
-                return flask.make_response("Invalid product: '%s'" % product, 403)
+                self._logger.error("Invalid product ID")
+                continue
 
             if key not in self.relays:
                 self.relays[key] = Relay(vendor, product)
@@ -91,11 +93,13 @@ class USBRelayControlPlugin(
             try:
                 vendor = int(configuration["vendor"], 16)
             except ValueError:
-                return flask.make_response("Invalid vendor: '%s'" % vendor, 403)
+                self._logger.error("Invalid vendor ID")
+                continue
             try:
                 product = int(configuration["product"], 16)
             except ValueError:
-                return flask.make_response("Invalid product: '%s'" % product, 403)
+                self._logger.error("Invalid product ID")
+                continue
             if key not in self.relays:
                 self.relays[key] = Relay(vendor, product)
             self._logger.info(
@@ -124,7 +128,7 @@ class USBRelayControlPlugin(
         return dict(turnUSBRelayOn=["id"], turnUSBRelayOff=["id"], getUSBRelayState=["id"])
 
     def on_api_command(self, command, data):
-        if not user_permission.can():
+        if not Permissions.PLUGIN_USBRELAYCONTROL_CONTROL.can():
             return flask.make_response("Insufficient rights", 403)
 
         configuration = self._settings.get(["usbrelay_configurations"])[int(data["id"])]
@@ -189,6 +193,16 @@ class USBRelayControlPlugin(
                 pip="https://github.com/abudden/OctoPrint-USBRelayControl/archive/{target_version}.zip",
             )
         )
+
+    def get_additional_permissions(self, *args, **kwargs):
+        return [
+                dict(key="CONTROL",
+                    name="Control",
+                    description=gettext("Allows switching relays on/off"),
+                    roles=["admin"],
+                    dangerous=True,
+                    default_groups=[Permissions.ADMIN_GROUP])
+                ]
 
 __plugin_name__ = "USB Relay Control"
 __plugin_pythoncompat__ = ">=2.7,<4"

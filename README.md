@@ -16,12 +16,10 @@ or manually using this URL:
 
     https://github.com/abudden/OctoPrint-USBRelayControl/archive/master.zip
 
-The module depends on the [hidapi module](https://github.com/trezor/cython-hidapi), which can be installed like this:
+The module depends on the [hidapi module](https://github.com/trezor/cython-hidapi), which should be installed automatically.  If you have any issues, try installing these packages before installing the plugin:
 
 ```
 sudo apt-get install python3-dev libusb-1.0-0-dev libudev-dev
-python3 -m pip install --upgrade setuptools
-python3 -m pip install hidapi
 ```
 
 You'll also need to make sure that the USB relay can be controlled without root privileges.
