@@ -66,10 +66,10 @@ class USBRelayControlPlugin(
             if key not in self.relays:
                 self.relays[key] = Relay(vendor, product)
             self._logger.info(
-                "Reconfigured USB Relay{}: {},{} ({})".format(
+                "Reconfigured USB Relay {}: {}, {} ({})".format(
+                    configuration["relaynumber"],
                     configuration["vendor"],
                     configuration["product"],
-                    configuration["relaynumber"],
                     configuration["active_mode"],
                     configuration["default_state"],
                     configuration["name"],
@@ -103,10 +103,10 @@ class USBRelayControlPlugin(
             if key not in self.relays:
                 self.relays[key] = Relay(vendor, product)
             self._logger.info(
-                "Configured USB Relay{}: {},{} ({})".format(
+                "Configured USB Relay {}: {},{} ({})".format(
+                    configuration["relaynumber"],
                     configuration["vendor"],
                     configuration["product"],
-                    configuration["relaynumber"],
                     configuration["active_mode"],
                     configuration["default_state"],
                     configuration["name"],
